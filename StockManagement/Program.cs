@@ -6,6 +6,8 @@ namespace StockManagement
     {
         static void Main(string[] args)
         {
+            
+            
             Stock.ReadInput();
             Console.Read();
         }

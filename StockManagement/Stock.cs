@@ -17,25 +17,38 @@ namespace StockManagement
             string filePath = @"C:\Users\Sona G\source\repos\StockManagement\StockManagement\Json.json";
             StockUtility utility = JsonConvert.DeserializeObject<StockUtility>(File.ReadAllText(filePath));
 
-            Console.WriteLine("1.Display Stocks \n2.Calculate value of each stock \n3.Calculate stock Total");
+            Console.WriteLine("1.Display Stocks \n2. Create Stock \n3.Buy Stock \n4.Sell Stock");
 
             Console.WriteLine("Enter an Option : ");
             int choice = Convert.ToInt32(Console.ReadLine());
-
+            bool check = true;
+        while(check)
+        { 
             switch (choice)
             {
                 case 1:
                     manager.DisplayStock(utility.StockList);
                     break;
                 case 2:
-                    manager.CalculateEachValue(utility.StockList);
+                    Console.WriteLine("Create New Stock");
+                    manager.CreateStock(utility.StockList);
+                    File.WriteAllText(filePath, JsonConvert.SerializeObject(utility.StockList));
                     break;
                 case 3:
-                    manager.CalculateTotalValue(utility.StockList);
+                    Console.WriteLine("Buy New Stock");
+                    manager.BuyStock(utility.StockList);
+                    File.WriteAllText(filePath, JsonConvert.SerializeObject(utility.StockList));
                     break;
+                case 4:
+                    Console.WriteLine("Sell New Stock");
+                    manager.BuyStock(utility.StockList);
+                    File.WriteAllText(filePath, JsonConvert.SerializeObject(utility.StockList));
+                    break;
+
                 default:
                     break;
             }
+          }
         }
     }
 }
