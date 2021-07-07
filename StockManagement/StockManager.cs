@@ -12,7 +12,7 @@ namespace StockManagement
     {
         private static LinkedList<string> trans = new LinkedList<string>();
 
-
+        private static LinkedList<string> transDateTime = new LinkedList<string>();
         //Create the New Stock
         public void CreateStock(LinkedList<StockUtility.Stock> stock)
         {
@@ -33,6 +33,8 @@ namespace StockManagement
         {
             int price = 0;
             string transactions = string.Empty;
+            DateTime date = DateTime.Now;
+            string transactionDate = string.Empty;
             Console.WriteLine("Enter the number of stock you want to buy:");
             int num = Convert.ToInt32(Console.ReadLine());
             //StockManager manager = new StockManager();
@@ -54,21 +56,24 @@ namespace StockManagement
 
                         stock.Remove(stock.Find(value));
                         break;
-                        
-                    }
-                    else
-                    {
-                        Console.WriteLine("Stock is not available");
-                        
+
                     }
 
                     newStock.Name = name;
                     newStock.Volume = amount;
                     newStock.Price = price;
+                    //Transaction of Stock
+                    transactions = "Transaction on Name : " + " " + newStock.Name + " " + "of volume= " + " " + newStock.Volume + " " + " ValueOf = " + " " + newStock.Volume * newStock.Price;
+                    trans.AddLast(transactions);
+                    Console.WriteLine(transactions);
+                    //Transaction Date and Time
+                    transactionDate = "Transaction at " + date.ToString("dddd, dd MMMM yyyy HH:mm:ss");
+                    Console.WriteLine(transactionDate);
+                    trans.AddLast(transactions);
+
                 }
-                //Transaction of Stock
-                transactions = "Transaction on Name : " + " " + newStock.Name + " "+"of volume= " + " " + newStock.Volume + " " + "ValueOf =" + " "+ newStock.Volume * newStock.Price;
-                trans.AddLast(transactions);
+
+                PrintReport();
             }
 
 
@@ -77,7 +82,10 @@ namespace StockManagement
         public void SellStock(LinkedList<StockUtility.Stock> stock)
         {
             int price = 0;
+            DateTime date = DateTime.Now;
             string transactions = string.Empty;
+            string transactionDate = string.Empty;
+
             Console.WriteLine("Enter the number of stock you want to sell:");
             int num = Convert.ToInt32(Console.ReadLine());
             StockUtility.Stock newStock = new StockUtility.Stock();
@@ -107,9 +115,14 @@ namespace StockManagement
                 newStock.Name = name;
                 newStock.Volume = amount;
                 newStock.Price = price;
-                transactions = "Transaction on Name : " + " " + newStock.Name + "of volume= " + " " + newStock.Volume + " " + "ValueOf =" + " " + newStock.Volume * newStock.Price;
-                Console.WriteLine(transactions);
+                transactions = "Transaction on Name : " + " " + newStock.Name + "of volume = " + " " + newStock.Volume + " " + "ValueOf = " + " " + newStock.Volume * newStock.Price;
                 trans.AddLast(transactions);
+                Console.WriteLine(transactions);
+                //Transaction Date and Time
+                transactionDate = "Transaction at " + date.ToString("dddd, dd MMMM yyyy HH:mm:ss");
+                Console.WriteLine(transactionDate);
+                trans.AddLast(transactions);
+               
             }
                 
                 PrintReport();
@@ -127,7 +140,7 @@ namespace StockManagement
             if (trans.Count > 0)
             {
                 
-                foreach (string i in trans)
+                foreach (string i in transDateTime)
                 {
                     Console.WriteLine(i);
                 }
