@@ -10,9 +10,7 @@ namespace StockManagement
 {
     class StockManager
     {
-        
-        
-        
+        //Create the New Stock
         public void CreateStock(LinkedList<StockUtility.Stock> stock)
         {
             StockManager manager = new StockManager();
@@ -27,41 +25,61 @@ namespace StockManagement
             stock.AddLast(newstock);
             manager.SaveStock(stock);
         }
+        //Buy the stock
         public void BuyStock(LinkedList<StockUtility.Stock> stock)
         {
             int price = 0;
+            string transactions = string.Empty;
+            Console.WriteLine("Enter the number of stock you want to buy:");
+            int num = Convert.ToInt32(Console.ReadLine());
+            //StockManager manager = new StockManager();
             StockUtility.Stock newStock = new StockUtility.Stock();
-            Console.WriteLine("Enter the name:");
-            string name = Console.ReadLine();
-            Console.WriteLine("Enter the volume:");
-             int amount = Convert.ToInt32(Console.ReadLine());
-
-            foreach (StockUtility.Stock value in stock)
+            for (int i = 0; i < num; i++)
             {
-                if (value.Name.Equals(name))
+                Console.WriteLine("Enter the name:");
+                string name = Console.ReadLine();
+                Console.WriteLine("Enter the volume:");
+                int amount = Convert.ToInt32(Console.ReadLine());
+
+                foreach (StockUtility.Stock value in stock)
                 {
-                    amount += value.Volume;
-                    price = value.Price;
-                    name = value.Name;
-                   
-                    stock.Remove(stock.Find(value));
-                    break;
-                }
-                else
-                {
-                    Console.WriteLine("Stock is not available");
+                    if (value.Name.Equals(name))
+                    {
+                        amount += value.Volume;
+                        price = value.Price;
+                        name = value.Name;
+
+                        stock.Remove(stock.Find(value));
+                        break;
+                        
+                    }
+                    else
+                    {
+                        Console.WriteLine("Stock is not available");
+                        
+                    }
+
+                    newStock.Name = name;
+                    newStock.Volume = amount;
+                    newStock.Price = price;
+
+                    
                 }
 
-                newStock.Name = name;
-                newStock.Volume= amount;
-                newStock.Price = price;
+                transactions = "Transaction on Name : " + " " + newStock.Name + "of volume= " + " " + newStock.Volume + " " + "ValueOf =" + newStock.Volume * newStock.Price;
+                Console.WriteLine(transactions);
+
+
             }
 
 
         }
+        //Selling the Stock
         public void SellStock(int amount, string name, LinkedList<StockUtility.Stock> stock)
         {
             int price = 0;
+            string transactions = string.Empty;
+            Console.WriteLine("Enter the number of stock you want to sell:");
             StockUtility.Stock newStock = new StockUtility.Stock();
             
             Console.WriteLine("Enter the name :");
@@ -88,21 +106,19 @@ namespace StockManagement
                 newStock.Name = name;
                 newStock.Volume = amount;
                 newStock.Price = price;
+                transactions = "Transaction on Name : " + " " + newStock.Name + "of volume= " + " " + newStock.Volume + " " + "ValueOf =" + newStock.Volume * newStock.Price;
+               Console.WriteLine(transactions);
             }
 
 
         }
+        // To Save the Stock
         public void SaveStock(LinkedList<StockUtility.Stock> stockList)
         {
-            //string filePath = @"C:\Users\user\source\repos\StockManagement\StockManagement\Stock.Json";
+            
             StockUtility StockUtility = new StockUtility();
             StockUtility.StockList = stockList;
-
-
-            //File.WriteAllText(filePath, JsonConvert.SerializeObject(StockUtility));
         }
-
-
 
         public void DisplayStock(LinkedList<StockUtility.Stock> stock)
         {
@@ -116,7 +132,7 @@ namespace StockManagement
 
 
         }
-
+        //Calculate Each Value of Stock
         public void CalculateEachValue(LinkedList<StockUtility.Stock> stockRecord)
         {
 
@@ -133,7 +149,7 @@ namespace StockManagement
             }
 
         }
-
+        //Calculate Total Value
         public void CalculateTotalValue(LinkedList<StockUtility.Stock> stock)
         {
 
