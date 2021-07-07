@@ -10,6 +10,9 @@ namespace StockManagement
 {
     class StockManager
     {
+        private static LinkedList<string> trans = new LinkedList<string>();
+
+
         //Create the New Stock
         public void CreateStock(LinkedList<StockUtility.Stock> stock)
         {
@@ -62,55 +65,54 @@ namespace StockManagement
                     newStock.Name = name;
                     newStock.Volume = amount;
                     newStock.Price = price;
-
-                    
                 }
-
-                transactions = "Transaction on Name : " + " " + newStock.Name + "of volume= " + " " + newStock.Volume + " " + "ValueOf =" + newStock.Volume * newStock.Price;
-                Console.WriteLine(transactions);
-
-
+                //Transaction of Stock
+                transactions = "Transaction on Name : " + " " + newStock.Name + " "+"of volume= " + " " + newStock.Volume + " " + "ValueOf =" + " "+ newStock.Volume * newStock.Price;
+                trans.AddLast(transactions);
             }
 
 
         }
         //Selling the Stock
-        public void SellStock(int amount, string name, LinkedList<StockUtility.Stock> stock)
+        public void SellStock(LinkedList<StockUtility.Stock> stock)
         {
             int price = 0;
             string transactions = string.Empty;
             Console.WriteLine("Enter the number of stock you want to sell:");
+            int num = Convert.ToInt32(Console.ReadLine());
             StockUtility.Stock newStock = new StockUtility.Stock();
-            
-            Console.WriteLine("Enter the name :");
-            name = Console.ReadLine();
-            Console.WriteLine("Enter the volume:");
-            amount = Convert.ToInt32(Console.ReadLine());
-
-            foreach (StockUtility.Stock value in stock)
+            for (int i = 0; i < num; i++)
             {
-                if (value.Name.Equals(name)&& amount<=value.Volume)
-                {
-                    amount = value.Volume-amount;
-                    price = value.Price;
-                    name = value.Name;
 
-                    stock.Remove(stock.Find(value));
-                    break;
-                }
-                else
-                {
-                    Console.WriteLine("Stock is not available");
-                }
+                Console.WriteLine("Enter the name :");
+                string name = Console.ReadLine();
+                Console.WriteLine("Enter the volume:");
+                int amount = Convert.ToInt32(Console.ReadLine());
 
+
+                foreach (StockUtility.Stock value in stock)
+                {
+                    if (value.Name.Equals(name) && amount <= value.Volume)
+                    {
+                        amount = value.Volume - amount;
+                        price = value.Price;
+                        name = value.Name;
+
+                        stock.Remove(stock.Find(value));
+                        break;
+                    }
+
+                }
+                
                 newStock.Name = name;
                 newStock.Volume = amount;
                 newStock.Price = price;
-                transactions = "Transaction on Name : " + " " + newStock.Name + "of volume= " + " " + newStock.Volume + " " + "ValueOf =" + newStock.Volume * newStock.Price;
-               Console.WriteLine(transactions);
+                transactions = "Transaction on Name : " + " " + newStock.Name + "of volume= " + " " + newStock.Volume + " " + "ValueOf =" + " " + newStock.Volume * newStock.Price;
+                Console.WriteLine(transactions);
+                trans.AddLast(transactions);
             }
-
-
+                
+                PrintReport();
         }
         // To Save the Stock
         public void SaveStock(LinkedList<StockUtility.Stock> stockList)
@@ -118,6 +120,22 @@ namespace StockManagement
             
             StockUtility StockUtility = new StockUtility();
             StockUtility.StockList = stockList;
+        }
+        public void PrintReport()
+        {
+
+            if (trans.Count > 0)
+            {
+                
+                foreach (string i in trans)
+                {
+                    Console.WriteLine(i);
+                }
+            }
+            else
+            {
+                Console.WriteLine( " Transactions Not Done ");
+            }
         }
 
         public void DisplayStock(LinkedList<StockUtility.Stock> stock)
